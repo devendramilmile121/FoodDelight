@@ -1,10 +1,18 @@
 using FoodDelight.Server.Data;
+using FoodDelight.Server.Mapper;
+using FoodDelight.Server.Services;
+using FoodDelight.Server.Services.Interfaces;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// Mapster Config
+builder.Services.AddMapster();
+MapsterConfig.Configure();
+
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 
 // Add App db context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

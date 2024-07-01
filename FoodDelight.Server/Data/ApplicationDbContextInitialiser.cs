@@ -45,10 +45,9 @@ namespace FoodDelight.Server.Data
         {
             if (!_context.Restaurants.Any() && !_context.Menus.Any() && !_context.MenuItems.Any())
             {
-                _context.Restaurants.AddRange(
+                var restaurants = new List<Restaurant> {
                     new Restaurant
                     {
-                        Id = 1,
                         Name = "The Good Food Place",
                         Location = "123 Main Street",
                         Phone = "555-1234",
@@ -58,7 +57,6 @@ namespace FoodDelight.Server.Data
                     },
                     new Restaurant
                     {
-                        Id = 2,
                         Name = "Pizza Heaven",
                         Location = "456 Elm Street",
                         Phone = "555-5678",
@@ -66,32 +64,36 @@ namespace FoodDelight.Server.Data
                         Type = Enums.RestautantType.VegNonVeg,
                         CreatedDate = DateTime.UtcNow
                     }
-                );
+                };
 
-                _context.Menus.AddRange(
+                _context.Restaurants.AddRange(restaurants);
+                await _context.SaveChangesAsync();
+
+                var menus = new List<Menu>
+                {
                     new Menu
                     {
-                        Id = 1,
-                        RestaurantId = 1,
+                        RestaurantId = restaurants[0].Id,
                         Name = "Main Menu",
                         MenuType = Enums.MenuType.Veg,
                         CreatedDate = DateTime.UtcNow
                     },
                     new Menu
                     {
-                        Id = 2,
-                        RestaurantId = 2,
+                        RestaurantId = restaurants[1].Id,
                         Name = "Pizza Menu",
                         MenuType = Enums.MenuType.Veg,
                         CreatedDate = DateTime.UtcNow
                     }
-                );
+                };
+                _context.Menus.AddRange(menus);
+                await _context.SaveChangesAsync();
 
-                _context.MenuItems.AddRange(
+                var menuItems = new List<MenuItem>
+                {
                     new MenuItem
                     {
-                        Id = 1,
-                        MenuId = 1,
+                        MenuId = menus[0].Id,
                         Name = "Burger",
                         Description = "Juicy grilled burger with lettuce, tomato, and cheese.",
                         Price = 8.99m,
@@ -100,8 +102,7 @@ namespace FoodDelight.Server.Data
                     },
                     new MenuItem
                     {
-                        Id = 2,
-                        MenuId = 1,
+                        MenuId = menus[0].Id,
                         Name = "Fries",
                         Description = "Crispy golden french fries.",
                         Price = 2.99m,
@@ -110,8 +111,7 @@ namespace FoodDelight.Server.Data
                     },
                     new MenuItem
                     {
-                        Id = 3,
-                        MenuId = 2,
+                        MenuId = menus[1].Id,
                         Name = "Pepperoni Pizza",
                         Description = "Classic pizza with pepperoni and mozzarella cheese.",
                         Price = 12.99m,
@@ -120,16 +120,15 @@ namespace FoodDelight.Server.Data
                     },
                     new MenuItem
                     {
-                        Id = 4,
-                        MenuId = 2,
+                        MenuId = menus[1].Id,
                         Name = "Margherita Pizza",
                         Description = "Pizza with fresh tomatoes, basil, and mozzarella cheese.",
                         Price = 10.99m,
                         ImagePath = "/uploads/default_margherita_pizza.jpg",
                         CreatedDate = DateTime.UtcNow
                     }
-                );
-
+                };
+                _context.MenuItems.AddRange(menuItems);
                 await _context.SaveChangesAsync();
             }
         }
