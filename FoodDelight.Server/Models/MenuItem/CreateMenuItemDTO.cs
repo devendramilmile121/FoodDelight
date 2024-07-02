@@ -2,7 +2,7 @@
 
 namespace FoodDelight.Server.Models.MenuItem
 {
-    public class CreateMenuItem
+    public class CreateMenuItemDTO
     {
         public int MenuId { get; set; }
         public string Name { get; set; }

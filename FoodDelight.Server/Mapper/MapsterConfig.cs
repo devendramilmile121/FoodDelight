@@ -33,6 +33,24 @@ namespace FoodDelight.Server.Mapper
                 .Map(dest => dest.MenuType, src => src.MenuType)
                 .Map(dest => dest.RestaurantId, src => src.RestaurantId)
                 .Map(dest => dest.Items, src => src.MenuItems.Adapt<List<MenuItemDTO>>());
+            
+            TypeAdapterConfig<Menu, CreateMenuDTO>.NewConfig()
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.MenuType, src => src.MenuType);
+            
+            TypeAdapterConfig<MenuItem, MenuItemDTO>.NewConfig()
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.MenuId, src => src.MenuId)
+                .Map(dest => dest.ImagePath, src => src.ImagePath)
+                .Map(dest => dest.Price, src => src.Price);
+            
+            TypeAdapterConfig<MenuItem, CreateMenuItemDTO>.NewConfig()
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.MenuId, src => src.MenuId)
+                .Map(dest => dest.ImagePath, src => src.ImagePath)
+                .Map(dest => dest.Price, src => src.Price);
         }
     }
 }

@@ -13,6 +13,7 @@ builder.Services.AddMapster();
 MapsterConfig.Configure();
 
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<IMenuService, MenuService>();
 
 // Add App db context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
