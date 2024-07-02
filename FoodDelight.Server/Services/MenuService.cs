@@ -13,7 +13,7 @@ namespace FoodDelight.Server.Services
         private readonly ApplicationDbContext _context;
         private readonly IRestaurantService _restaurantService;
         private readonly IMapper _mapper;
-        private ILogger<MenuService> _logger;
+        private readonly ILogger<MenuService> _logger;
 
         public MenuService(ApplicationDbContext context, IRestaurantService restaurantService,
             IMapper mapper,

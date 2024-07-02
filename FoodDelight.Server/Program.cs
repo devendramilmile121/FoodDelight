@@ -14,6 +14,7 @@ MapsterConfig.Configure();
 
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<IMenuService, MenuService>();
+builder.Services.AddScoped<IMenuItemService, MenuItemService>();
 
 // Add App db context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
