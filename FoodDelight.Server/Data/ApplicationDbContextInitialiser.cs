@@ -98,7 +98,7 @@ namespace FoodDelight.Server.Data
                         Name = "Burger",
                         Description = "Juicy grilled burger with lettuce, tomato, and cheese.",
                         Price = 8.99m,
-                        ImagePath = "base64",
+                        ImagePath = base64,
                         CreatedDate = DateTime.UtcNow
                     },
                     new MenuItem
@@ -107,7 +107,7 @@ namespace FoodDelight.Server.Data
                         Name = "Fries",
                         Description = "Crispy golden french fries.",
                         Price = 2.99m,
-                        ImagePath = "base64",
+                        ImagePath = base64,
                         CreatedDate = DateTime.UtcNow
                     },
                     new MenuItem
@@ -116,7 +116,7 @@ namespace FoodDelight.Server.Data
                         Name = "Pepperoni Pizza",
                         Description = "Classic pizza with pepperoni and mozzarella cheese.",
                         Price = 12.99m,
-                        ImagePath = "/uploads/default_pepperoni_pizza.jpg",
+                        ImagePath = base64,
                         CreatedDate = DateTime.UtcNow
                     },
                     new MenuItem
@@ -125,7 +125,7 @@ namespace FoodDelight.Server.Data
                         Name = "Margherita Pizza",
                         Description = "Pizza with fresh tomatoes, basil, and mozzarella cheese.",
                         Price = 10.99m,
-                        ImagePath = "/uploads/default_margherita_pizza.jpg",
+                        ImagePath = base64,
                         CreatedDate = DateTime.UtcNow
                     }
                 };

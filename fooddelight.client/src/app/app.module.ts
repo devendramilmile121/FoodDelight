@@ -9,6 +9,7 @@ import { MaterialModule } from './common/material.module';
 import { RestaurantService } from './services/restraurant.service';
 import { MenuService } from './services/menu.service';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { MenuItemService } from './services/menu-item.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     provideAnimationsAsync(),
     RestaurantService,
     MenuService,
+    MenuItemService,
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
   ],
   bootstrap: [AppComponent],

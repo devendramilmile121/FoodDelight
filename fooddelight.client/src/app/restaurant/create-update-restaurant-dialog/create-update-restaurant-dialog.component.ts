@@ -45,7 +45,7 @@ export class CreateUpdateRestaurantDialogComponent implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(2000)]],
       location: ['', [Validators.required, Validators.maxLength(250)]],
       type: ['', [Validators.required, Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern('^[- +()0-9]+$')]],
+      phone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       email: ['', [Validators.required, Validators.email]],
     });
 

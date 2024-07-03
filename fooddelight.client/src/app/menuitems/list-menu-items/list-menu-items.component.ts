@@ -1,27 +1,26 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { MenuService } from '../../services/menu.service';
-import { CreateUpdateMenuDialogComponent } from '../create-update-menu-dialog/create-update-menu-dialog.component';
+import { MenuItemService } from '../../services/menu-item.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CreateUpdateMenuItemComponent } from '../create-update-menu-item/create-update-menu-item.component';
 import { ConfirmationDialogComponent } from '../../common/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
-  selector: 'app-menu-listing',
-  templateUrl: './menu-listing.component.html',
-  styleUrl: './menu-listing.component.css',
+  selector: 'app-list-menu-items',
+  templateUrl: './list-menu-items.component.html',
+  styleUrl: './list-menu-items.component.css',
 })
-export class MenuListingComponent {
-  displayedColumns: string[] = ['name', 'type', 'count', ' '];
+export class ListMenuItemsComponent {
+  displayedColumns: string[] = ['name', 'description', 'price', 'imagePath', ' '];
   dataSource: any[] = [];
 
   private destroy$: Subject<string> = new Subject<string>();
-  restaurantId: string | null = '0';
+  menuId: string | null = '0';
   loading: boolean = true;
-
   constructor(
-    private ms: MenuService,
+    private mis: MenuItemService,
     private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
@@ -30,26 +29,21 @@ export class MenuListingComponent {
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe((params) => {
-      this.restaurantId = params.get('id');
-      if (this.restaurantId) {
-        this.getAllMenus(this.restaurantId);
+      this.menuId = params.get('id');
+      if (this.menuId) {
+        this.getAllMenus(this.menuId);
       }
     });
   }
 
-  getAllMenus(restaurantId: string): void {
+  getAllMenus(menuId: string): void {
     this.loading = true;
-    this.ms
-      .getAll(restaurantId)
+    this.mis
+      .getAll(menuId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         if (res && res?.length > 0) {
-          this.dataSource = res.map((a: any) => {
-            return {
-              ...a,
-              displayType: this.getType(a.menuType),
-            };
-          });
+          this.dataSource = res;
           this.loading = false;
         } else {
           this.dataSource = [];
@@ -60,16 +54,12 @@ export class MenuListingComponent {
       });
   }
 
-  getType(id: number): string {
-    return MENU_TYPES.get(id) || '';
-  }
-
   openEditDialog(action: string, item?: any): void {
-    const dialogRef = this.dialog.open(CreateUpdateMenuDialogComponent, {
+    const dialogRef = this.dialog.open(CreateUpdateMenuItemComponent, {
       data: { restaurant: item, action: action },
       disableClose: true,
       width: '50%',
-      height: '41%',
+      height: '87%',
     });
 
     dialogRef
@@ -77,11 +67,11 @@ export class MenuListingComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((result) => {
         if (result.action === 'refresh') {
-          if (action === 'CREATE' && this.restaurantId) {
-            this.createMenu(this.restaurantId, result.data);
+          if (action === 'CREATE' && this.menuId) {
+            this.createMenu(this.menuId, result.data);
           }
-          if (action === 'UPDATE' && this.restaurantId) {
-            this.updateMenu(this.restaurantId, item.id, result.data);
+          if (action === 'UPDATE' && this.menuId) {
+            this.updateMenu(this.menuId, item.id, result.data);
           }
         }
       });
@@ -109,14 +99,14 @@ export class MenuListingComponent {
   }
 
   deleteMenu(id: any) {
-    this.ms
+    this.mis
       .delete(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (result) => {
           if (result) {
-            if (this.restaurantId) {
-              this.getAllMenus(this.restaurantId);
+            if (this.menuId) {
+              this.getAllMenus(this.menuId);
             }
             this.snack.open('Menu deleted successfully.', 'close');
           } else {
@@ -129,15 +119,15 @@ export class MenuListingComponent {
       );
   }
 
-  updateMenu(restaurantId: string, id: any, data: any) {
-    this.ms
-      .update(restaurantId, id, data)
+  updateMenu(menuId: string, id: any, data: any) {
+    this.mis
+      .update(menuId, id, data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (result) => {
           if (result) {
-            if (this.restaurantId) {
-              this.getAllMenus(this.restaurantId);
+            if (this.menuId) {
+              this.getAllMenus(this.menuId);
             }
             this.snack.open('Menu updated successfully.', 'close');
           } else {
@@ -150,15 +140,15 @@ export class MenuListingComponent {
       );
   }
 
-  createMenu(restaurantId: string,data: any) {
-    this.ms
-      .create(restaurantId,data)
+  createMenu(menuId: string, data: any) {
+    this.mis
+      .create(menuId, data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (result) => {
           if (result) {
-            if (this.restaurantId) {
-              this.getAllMenus(this.restaurantId);
+            if (this.menuId) {
+              this.getAllMenus(this.menuId);
             }
             this.snack.open('Menu created successfully.', 'close');
           } else {
@@ -180,7 +170,3 @@ export class MenuListingComponent {
     this.router.navigate(['pages', 'menu-items', element.id]);
   }
 }
-
-export const MENU_TYPES = new Map<number, string>();
-MENU_TYPES.set(1, 'Veg');
-MENU_TYPES.set(2, 'Non Veg');

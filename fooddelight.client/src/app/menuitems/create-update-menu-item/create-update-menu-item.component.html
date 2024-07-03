@@ -1,0 +1,93 @@
+<h2 mat-dialog-title>{{ title }} Menu Item</h2>
+<mat-dialog-content>
+  <form [formGroup]="menuFg">
+    <mat-form-field class="w-full">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" formControlName="name" />
+      @if (f['name'].errors && f['name'].touched &&
+      f['name'].errors['required']) {
+      <mat-error>Name is required.</mat-error>
+      } @if (f['name'].errors && f['name'].touched &&
+      f['name'].errors['maxlength']) {
+      <mat-error
+        >Max 250 characters allowed entered
+        {{ f["name"].errors["maxlength"]["actualLength"] }}
+        characters.</mat-error
+      >
+      }
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        placeholder="Description"
+        rows="5"
+        formControlName="description"
+      ></textarea>
+      @if (f['description'].errors && f['description'].touched &&
+      f['description'].errors['required']) {
+      <mat-error>Description is required.</mat-error>
+      } @if (f['description'].errors && f['description'].touched &&
+      f['description'].errors['maxlength']) {
+      <mat-error
+        >Max 2000 characters allowed entered
+        {{ f["description"].errors["maxlength"]["actualLength"] }}
+        characters.</mat-error
+      >
+      }
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Price</mat-label>
+      <input
+        matInput
+        placeholder="Price"
+        type="number"
+        formControlName="price"
+      />
+      @if (f['price'].errors && f['price'].touched &&
+      f['price'].errors['required']) {
+      <mat-error>Name is required.</mat-error>
+      }
+    </mat-form-field>
+    <input
+      type="file"
+      id="fileInput"
+      (change)="selectFile($event)"
+      name="fileInput"
+      accept="image/*"
+      required
+    />
+    @if (f['imagePath'].errors && f['imagePath'].touched &&
+      f['imagePath'].errors['required']) {
+      <mat-error>Image is required.</mat-error>
+      }
+    <div
+      class="big-img-container"
+      *ngIf="this.menuFg.controls['imagePath'].value"
+    >
+      <img
+        [src]="this.menuFg.controls['imagePath'].value"
+        alt="uploaded image"
+      />
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions-end">
+  <button
+    mat-stroked-button
+    (click)="onClose({ action: 'close', data: undefined })"
+  >
+    Close
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="onSubmit()"
+    cdkFocusInitial
+    [disabled]="menuFg.invalid"
+  >
+    {{ title }}
+  </button>
+</mat-dialog-actions>

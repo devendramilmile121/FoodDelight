@@ -23,6 +23,7 @@ export class ListRestaurantComponent implements OnInit, OnDestroy {
     ' ',
   ];
   dataSource: any[] = [];
+  loading: boolean = true;
 
   private destroy$: Subject<string> = new Subject<string>();
 
@@ -38,21 +39,29 @@ export class ListRestaurantComponent implements OnInit, OnDestroy {
   }
 
   getAllRestaurant(): void {
+    this.loading = true;
     this.rs
       .getAll()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        if (res && res?.length > 0) {
-          this.dataSource = res.map((a: any) => {
-            return {
-              ...a,
-              displayType: this.getType(a.type),
-            };
-          });
-        } else {
-          this.dataSource = [];
+      .subscribe(
+        (res) => {
+          if (res && res?.length > 0) {
+            this.dataSource = res.map((a: any) => {
+              return {
+                ...a,
+                displayType: this.getType(a.type),
+              };
+            });
+            this.loading = false;
+          } else {
+            this.dataSource = [];
+            this.loading = false;
+          }
+        },
+        (error) => {
+          this.loading = false;
         }
-      });
+      );
   }
 
   getType(id: number): string {
@@ -67,31 +76,40 @@ export class ListRestaurantComponent implements OnInit, OnDestroy {
       height: '98%',
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe((result) => {
-      if (result.action === 'refresh') {
-        if (action === 'CREATE') {
-          this.createRestaurant(result.data);
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result.action === 'refresh') {
+          if (action === 'CREATE') {
+            this.createRestaurant(result.data);
+          }
+          if (action === 'UPDATE') {
+            this.updateRestaurant(item.id, result.data);
+          }
         }
-        if (action === 'UPDATE') {
-          this.updateRestaurant(item.id, result.data);
-        }
-      }
-    });
+      });
   }
 
   openConfirmation(element: any): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { deleteMsg: `Are you sure you want to delete ${element.name}`, deleteTitle: 'Confirm Delete' },
+      data: {
+        deleteMsg: `Are you sure you want to delete ${element.name}`,
+        deleteTitle: 'Confirm Delete',
+      },
       disableClose: true,
       width: '30%',
       height: '30%',
     });
 
-    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe((result) => {
-      if (result === 'yes') {
-        this.deleteRestaurant(element.id);
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((result) => {
+        if (result === 'yes') {
+          this.deleteRestaurant(element.id);
+        }
+      });
   }
 
   deleteRestaurant(id: any) {

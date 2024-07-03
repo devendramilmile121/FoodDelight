@@ -32,3 +32,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-mdc-dialog-content {
   max-height: 81% !important;
 }
+
+.list-content {
+  height: 80%;
+}
+
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-margin {
+  margin-left: 8px;
+}
