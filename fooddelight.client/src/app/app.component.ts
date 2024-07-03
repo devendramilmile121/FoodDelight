@@ -15,6 +15,7 @@ interface WeatherForecast {
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
+  public opened: boolean = true;
 
   constructor(private http: HttpClient) {}
 

@@ -8,6 +8,16 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "localhost",
+                      policy =>
+                      {
+                          policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                      });
+});
+
 // Mapster Config
 builder.Services.AddMapster();
 MapsterConfig.Configure();
@@ -32,6 +42,8 @@ var app = builder.Build();
 
 // Initilize Db with Seed
 await app.InitialiseDatabaseAsync();
+
+app.UseCors("localhost");
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

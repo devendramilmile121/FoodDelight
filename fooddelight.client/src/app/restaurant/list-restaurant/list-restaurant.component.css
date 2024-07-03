@@ -1,0 +1,16 @@
+:host {
+  height: 100%;
+  width: 100%;
+  display: block;
+}
+
+.description {
+  max-width: 48px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.action-margin {
+  margin-left: 8px;
+}

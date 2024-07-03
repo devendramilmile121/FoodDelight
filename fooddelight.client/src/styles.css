@@ -1,1 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.list-container {
+  height: 100%;
+  width: 100%;
+}
+.list-action {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.dialog-actions-end {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  justify-content: end !important;
+}
+
+.mat-mdc-dialog-content {
+  max-height: 81% !important;
+}

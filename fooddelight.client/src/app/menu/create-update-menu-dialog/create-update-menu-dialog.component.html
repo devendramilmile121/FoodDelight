@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>{{ title }} Restraurant</h2>
+<mat-dialog-content>
+  <form [formGroup]="menuFg">
+    <mat-form-field class="w-full">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" formControlName="name" />
+      @if (f['name'].errors && f['name'].touched &&
+      f['name'].errors['required']) {
+      <mat-error>Name is required.</mat-error>
+      } @if (f['name'].errors && f['name'].touched &&
+      f['name'].errors['maxlength']) {
+      <mat-error
+        >Max 250 characters allowed entered
+        {{
+          f["name"].errors["maxlength"]["actualLength"]
+        }}
+        characters.</mat-error
+      >
+      }
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="menuType">
+        @for (item of typeList; track item) {
+          <mat-option [value]="item.value">{{item.name}}</mat-option>
+        }
+      </mat-select>
+      @if (f['menuType'].errors && f['menuType'].touched &&
+      f['menuType'].errors['required']) {
+      <mat-error>Type is required.</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions-end">
+  <button
+    mat-stroked-button
+    (click)="onClose({ action: 'close', data: undefined })"
+  >
+    Close
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="onSubmit()"
+    cdkFocusInitial
+    [disabled]="menuFg.invalid"
+  >
+    {{ title }}
+  </button>
+</mat-dialog-actions>

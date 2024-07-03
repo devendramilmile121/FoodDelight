@@ -1,0 +1,55 @@
+<div class="list-container">
+  <div class="list-action">
+    <div class="action-title"><h2>Manage Menu</h2></div>
+    <div class="action-btn">
+      <button mat-stroked-button color="primary" (click)="openEditDialog('CREATE')" cdkFocusInitial>
+        Create
+      </button>
+    </div>
+  </div>
+  <div class="list-content">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.displayType }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="count">
+        <th mat-header-cell *matHeaderCellDef>Item Count</th>
+        <td mat-cell *matCellDef="let element">{{ element.items?.length }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef=" ">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon
+            (click)="openEditDialog('UPDATE',element)"
+            aria-hidden="false"
+            aria-label="Edit"
+            fontIcon="edit"
+          ></mat-icon>
+          <mat-icon class="action-margin"
+            (click)="navigateToMenu(element)"
+            aria-hidden="false"
+            aria-label="Open Menu"
+            fontIcon="open_in_new"
+          ></mat-icon>
+          <mat-icon class="action-margin"
+            (click)="openConfirmation(element)"
+            aria-hidden="false"
+            aria-label="Delete"
+            fontIcon="delete"
+          ></mat-icon>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

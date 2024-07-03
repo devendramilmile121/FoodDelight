@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>{{ title }} Restraurant</h2>
+<mat-dialog-content>
+  <form [formGroup]="restaurantFg">
+    <mat-form-field class="w-full">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name" formControlName="name" />
+      @if (f['name'].errors && f['name'].touched &&
+      f['name'].errors['required']) {
+      <mat-error>Name is required.</mat-error>
+      } @if (f['name'].errors && f['name'].touched &&
+      f['name'].errors['maxlength']) {
+      <mat-error
+        >Max 250 characters allowed entered
+        {{
+          f["name"].errors["maxlength"]["actualLength"]
+        }}
+        characters.</mat-error
+      >
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Description" rows="5" formControlName="description"></textarea>
+      @if (f['description'].errors && f['description'].touched &&
+      f['description'].errors['required']) {
+      <mat-error>Description is required.</mat-error>
+      } @if (f['description'].errors && f['description'].touched &&
+      f['description'].errors['maxlength']) {
+      <mat-error
+        >Max 2000 characters allowed entered
+        {{
+          f["description"].errors["maxlength"]["actualLength"]
+        }}
+        characters.</mat-error
+      >
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Location</mat-label>
+      <input matInput placeholder="Location" formControlName="location" />
+      @if (f['location'].errors && f['location'].touched &&
+      f['location'].errors['required']) {
+      <mat-error>Location is required.</mat-error>
+      } @if (f['location'].errors && f['location'].touched &&
+      f['location'].errors['maxlength']) {
+      <mat-error
+        >Max 250 characters allowed entered
+        {{
+          f["location"].errors["maxlength"]["actualLength"]
+        }}
+        characters.</mat-error
+      >
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="type">
+        @for (item of typeList; track item) {
+          <mat-option [value]="item.value">{{item.name}}</mat-option>
+        }
+      </mat-select>
+      @if (f['type'].errors && f['type'].touched &&
+      f['type'].errors['required']) {
+      <mat-error>Type is required.</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Phone</mat-label>
+      <input matInput placeholder="Phone" formControlName="phone" />
+      @if (f['phone'].errors && f['phone'].touched &&
+      f['phone'].errors['required']) {
+      <mat-error>Phone is required.</mat-error>
+      } @if (f['phone'].errors && f['phone'].touched &&
+      f['phone'].errors['pattern']) {
+      <mat-error
+        >Invalid phone number.</mat-error
+      >
+      }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="Email" formControlName="email" />
+      @if (f['email'].errors && f['email'].touched &&
+      f['email'].errors['required']) {
+      <mat-error>Email is required.</mat-error>
+      } @if (f['email'].errors && f['email'].touched &&
+      f['email'].errors['email']) {
+      <mat-error
+        >Invalid email address.</mat-error
+      >
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions-end">
+  <button
+    mat-stroked-button
+    (click)="onClose({ action: 'close', data: undefined })"
+  >
+    Close
+  </button>
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="onSubmit()"
+    cdkFocusInitial
+    [disabled]="restaurantFg.invalid"
+  >
+    {{ title }}
+  </button>
+</mat-dialog-actions>

@@ -101,6 +101,7 @@ namespace FoodDelight.Server.Services
             {
                 _logger.LogInformation($"Getting all Menus with {RestaurantId}.");
                 List<Menu> menus = await _context.Menus.Where(x => x.RestaurantId == RestaurantId)
+                    .Include(inc => inc.MenuItems)
                     .ToListAsync();
 
                 List<MenuDTO> menuDTO = _mapper.Map<List<MenuDTO>>(menus);
