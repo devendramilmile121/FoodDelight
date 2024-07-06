@@ -17,8 +17,17 @@
       </button>
     </div>
   </div>
-  <div class="list-content">
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <div
+    class="list-content"
+    *ngIf="!loading; else loader"
+  >
+    <table
+    *ngIf="!loading && dataSource.length !== 0; else noContent"
+
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+    >
       <ng-container matColumnDef="name" sticky>
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
@@ -48,19 +57,22 @@
       <ng-container matColumnDef=" ">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon
-            (click)="openEditDialog('UPDATE', element)"
-            aria-hidden="false"
-            aria-label="Edit"
-            fontIcon="edit"
-          ></mat-icon>
-          <mat-icon
-            class="action-margin"
-            (click)="openConfirmation(element)"
-            aria-hidden="false"
-            aria-label="Delete"
-            fontIcon="delete"
-          ></mat-icon>
+          <button class="table-action action-margin">
+            <mat-icon
+              (click)="openEditDialog('UPDATE', element)"
+              aria-hidden="false"
+              aria-label="Edit"
+              fontIcon="edit"
+            ></mat-icon>
+          </button>
+          <button class="table-action action-margin">
+            <mat-icon
+              (click)="openConfirmation(element)"
+              aria-hidden="false"
+              aria-label="Delete"
+              fontIcon="delete"
+            ></mat-icon>
+          </button>
         </td>
       </ng-container>
 
@@ -69,3 +81,26 @@
     </table>
   </div>
 </div>
+
+<ng-template #noContent>
+  <div class="h-full w-full spinner-container">
+    <div class="flex-col-center">
+      <h4>No Data Found!</h4>
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="openEditDialog('CREATE')"
+        cdkFocusInitial
+      >
+        Create
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #loader>
+  <div class="h-full w-full spinner-container">
+    <mat-spinner></mat-spinner>
+    <div><span>Loading...</span></div>
+  </div>
+</ng-template>
