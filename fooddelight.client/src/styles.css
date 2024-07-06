@@ -1,7 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 .list-container {
   height: 100%;
@@ -12,6 +19,25 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 16px;
+  width: 100%;
+}
+
+.action-title {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  h2 {
+    margin: 0;
+  }
+}
+
+.back-action {
+  padding: 4px !important;
+  border: 1px solid #c9c9c9 !important;
+  height: 32px;
+  width: 32px;
+  background: transparent;
+  margin-right: 16px;
 }
 
 .w-full {
@@ -34,7 +60,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .list-content {
-  height: 80%;
+  height: 90%;
+  width: 100%;
 }
 
 .spinner-container {
@@ -46,4 +73,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .action-margin {
   margin-left: 8px;
+}
+
+@media (min-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  .mat-mdc-dialog-panel {
+    height: 80% !important;
+    width: 100% !important;
+  }
+
+  .list-content {
+    height: 90% !important;
+    overflow: auto !important;
+  }
+  .action-margin {
+    margin-left: 0px;
+  }
+}
+@media (min-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (min-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (min-width: 961px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+}
+@media (min-width: 1025px) {
+  /* big landscape tablets, laptops, and desktops */
+}
+@media (min-width: 1281px) {
+  /* hi-res laptops and desktops */
 }

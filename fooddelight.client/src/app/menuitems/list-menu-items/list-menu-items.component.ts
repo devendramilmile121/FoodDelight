@@ -169,4 +169,8 @@ export class ListMenuItemsComponent {
   navigateToMenu(element: any): void {
     this.router.navigate(['pages', 'menu-items', element.id]);
   }
+
+  back(): void {
+    this.router.navigate(['pages', 'menu', this.menuId]);
+  }
 }

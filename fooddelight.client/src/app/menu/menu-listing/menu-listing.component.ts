@@ -179,6 +179,10 @@ export class MenuListingComponent {
   navigateToMenu(element: any): void {
     this.router.navigate(['pages', 'menu-items', element.id]);
   }
+
+  back(): void {
+    this.router.navigate(['pages', 'restaurant']);
+  }
 }
 
 export const MENU_TYPES = new Map<number, string>();

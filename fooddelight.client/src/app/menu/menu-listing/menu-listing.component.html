@@ -1,6 +1,13 @@
 <div class="list-container">
   <div class="list-action">
-    <div class="action-title"><h2>Manage Menu</h2></div>
+    <div class="action-title">
+      <button class="back-action" (click)="back()">
+        <mat-icon>
+          keyboard_backspace
+        </mat-icon>
+      </button>
+      <h2>Manage Menu</h2>
+    </div>
     <div class="action-btn">
       <button mat-stroked-button color="primary" (click)="openEditDialog('CREATE')" cdkFocusInitial>
         Create
