@@ -6,14 +6,14 @@ UI and API
 
 - Angular 17
 - Dotnet 8
-- Sql Server Lite
+- SQL Server Lite
 
 ## Step To Run
 
-- Open Solution File in Visual Studio 2022
+- Open FoodDelight.sln (solution file) in Visual Studio 2022
 - Set Startup Project as FoodDelight.Server
-- Start project using start button
-- Database will be created in SQL Server Object Explorere
+- Start the project using the start (Visual Studio) button
+- Database will be created in SQL Server Object Explorer
 - Database Migration will run automatically
 
 ## Features
